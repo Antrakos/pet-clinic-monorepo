@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.1.0"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot") version "3.1.1"
+    id("io.spring.dependency-management") version "1.1.1"
 }
 
 group = "com.github.antrakos.petclinic"
@@ -15,7 +15,7 @@ allprojects {
         mavenCentral()
     }
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.0"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.1"))
     }
 
     tasks.test {
