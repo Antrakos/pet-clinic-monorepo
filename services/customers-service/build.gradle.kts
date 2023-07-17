@@ -19,7 +19,3 @@ java {
         vendor.set(JvmVendorSpec.ADOPTIUM)
     }
 }
-
-//bootJar {
-//    // Add any customizations for customers-service's Spring Boot build
-//}

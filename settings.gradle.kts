@@ -11,3 +11,4 @@ plugins {
 
 rootProject.name = "pet-clinic-monorepo"
 include("services:customers-service")
+include("services:visits-service")
