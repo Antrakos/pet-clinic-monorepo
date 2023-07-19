@@ -6,10 +6,10 @@ plugins {
     id("io.spring.dependency-management") version "1.1.1"
 }
 
-val GITHUB_REF_NAME: String? by project
-val GITHUB_SHA: String? by project
-val DOCKER_USERNAME: String? by project
-val DOCKER_PASSWORD: String? by project
+val GITHUB_REF_NAME = System.getenv("GITHUB_REF_NAME")
+val GITHUB_SHA = System.getenv("GITHUB_SHA")
+val DOCKER_USERNAME = System.getenv("DOCKER_USERNAME")
+val DOCKER_PASSWORD= System.getenv("DOCKER_PASSWORD")
 
 val services = project("services").subprojects
 
