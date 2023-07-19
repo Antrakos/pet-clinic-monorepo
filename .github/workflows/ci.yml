@@ -18,11 +18,13 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '20'
+          distribution: 'adopt'
 
       - name: Build and Test
         run: ./gradlew build
   test:
     name: Test
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -33,12 +35,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '20'
+          distribution: 'adopt'
 
       - name: Build and Test
         run: ./gradlew test
 
   release:
     name: Release
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -49,6 +53,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '20'
+          distribution: 'adopt'
 
       - name: Build and publish Docker image
         env:
