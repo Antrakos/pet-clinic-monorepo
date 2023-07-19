@@ -24,6 +24,13 @@ allprojects {
         maven { url = uri("https://repo.spring.io/snapshot") }
     }
 
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(20))
+            vendor.set(JvmVendorSpec.ADOPTIUM)
+        }
+    }
+
     tasks.test {
         useJUnitPlatform()
     }

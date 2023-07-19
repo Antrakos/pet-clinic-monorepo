@@ -12,10 +12,3 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:postgresql")
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
-        vendor.set(JvmVendorSpec.ADOPTIUM)
-    }
-}
