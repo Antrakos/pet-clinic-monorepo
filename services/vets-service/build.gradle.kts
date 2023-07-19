@@ -9,6 +9,19 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(20))
+        vendor.set(JvmVendorSpec.ADOPTIUM)
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.test {
+    jvmArgs(listOf("--enable-preview"))
+}
+
+tasks.bootBuildImage {
+    environment.put("BPE_APPEND_JAVA_TOOL_OPTIONS", "--enable-preview")
 }
