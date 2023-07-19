@@ -24,7 +24,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build
-        run: ./gradlew build -x bootJar
+        run: ./gradlew build -x bootJar -x check
   test:
     name: Test
     needs: build
