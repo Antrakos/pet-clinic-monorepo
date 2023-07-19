@@ -5,6 +5,9 @@ plugins {
 }
 
 val GITHUB_REF_NAME: String? by project
+val GITHUB_SHA: String? by project
+val DOCKER_USERNAME: String? by project
+val DOCKER_PASSWORD: String? by project
 
 val services = project("services").subprojects
 
@@ -31,11 +34,24 @@ allprojects {
 }
 
 configure(services) {
-    version = if (GITHUB_REF_NAME != "master") "1.0-${GITHUB_REF_NAME ?: "local"}" else "1.0"
+    version = "1.0"
+
+    fun version() = when(GITHUB_REF_NAME) {
+        "master" -> "$version-${GITHUB_SHA?.take(6)}"
+        null -> "$version-local"
+        else -> "$version-$GITHUB_REF_NAME-${GITHUB_SHA?.take(6)}"
+    }
+
     tasks.bootBuildImage {
-        imageName = "antrakos/${project.name}:${project.version}"
+        imageName = "antrakos/${project.name}:${version()}"
         if (GITHUB_REF_NAME == "master") tags.add("antrakos/${project.name}:latest")
         environment.put("BPE_DELIM_JAVA_TOOL_OPTIONS", " ")
         buildpacks.set(listOf("paketobuildpacks/adoptium:latest", "paketo-buildpacks/java"))
+        docker {
+            builderRegistry {
+                username = DOCKER_USERNAME
+                password = DOCKER_PASSWORD
+            }
+        }
     }
 }
