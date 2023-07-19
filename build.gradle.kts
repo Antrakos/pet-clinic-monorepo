@@ -51,7 +51,7 @@ configure(services) {
         environment.put("BPE_DELIM_JAVA_TOOL_OPTIONS", " ")
         buildpacks.set(listOf("paketobuildpacks/adoptium:latest", "paketo-buildpacks/java"))
         docker {
-            builderRegistry {
+            publishRegistry {
                 username = DOCKER_USERNAME
                 password = DOCKER_PASSWORD
             }
