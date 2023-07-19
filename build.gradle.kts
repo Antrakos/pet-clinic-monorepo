@@ -1,6 +1,8 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.2.0-SNAPSHOT"
+    id("org.springframework.boot") version "3.2.0-SNAPSHOT" apply false
     id("io.spring.dependency-management") version "1.1.1"
 }
 
@@ -13,8 +15,6 @@ val services = project("services").subprojects
 
 allprojects {
     apply(plugin = "java")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
 
     group = "com.github.antrakos.petclinic"
 
@@ -24,17 +24,20 @@ allprojects {
         maven { url = uri("https://repo.spring.io/snapshot") }
     }
 
-    dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.0-SNAPSHOT"))
-    }
-
     tasks.test {
         useJUnitPlatform()
     }
 }
 
 configure(services) {
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+
     version = "1.0"
+
+    dependencies {
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.0-SNAPSHOT"))
+    }
 
     fun version() = when(GITHUB_REF_NAME) {
         "master" -> "$version-${GITHUB_SHA?.take(6)}"
@@ -42,7 +45,7 @@ configure(services) {
         else -> "$version-$GITHUB_REF_NAME-${GITHUB_SHA?.take(6)}"
     }
 
-    tasks.bootBuildImage {
+    tasks.withType<BootBuildImage> {
         imageName = "antrakos/${project.name}:${version()}"
         if (GITHUB_REF_NAME == "master") tags.add("antrakos/${project.name}:latest")
         environment.put("BPE_DELIM_JAVA_TOOL_OPTIONS", " ")
