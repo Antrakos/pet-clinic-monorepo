@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.2.0-SNAPSHOT" apply false
+    id("org.springframework.boot") version "3.2.0-M1" apply false
     id("io.spring.dependency-management") version "1.1.1"
 }
 
@@ -21,7 +21,6 @@ allprojects {
     repositories {
         mavenCentral()
         maven { url = uri("https://repo.spring.io/milestone") }
-        maven { url = uri("https://repo.spring.io/snapshot") }
     }
 
     java {
@@ -43,7 +42,10 @@ configure(services) {
     version = "1.0"
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.0-SNAPSHOT"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.0-M1"))
+
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.springframework.boot:spring-boot-testcontainers")
     }
 
     fun version() = when(GITHUB_REF_NAME) {
