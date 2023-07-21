@@ -27,8 +27,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ./build-cache
-          restore-keys: |
-            gradle-build-cache
+          key: gradle-build-cache
 
       - name: Build
         run: ./gradlew build -x bootJar -x check
