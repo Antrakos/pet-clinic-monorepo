@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
@@ -13,6 +15,6 @@ tasks.test {
     jvmArgs(listOf("--enable-preview"))
 }
 
-tasks.bootBuildImage {
+tasks.withType<BootBuildImage> {
     environment.put("BPE_APPEND_JAVA_TOOL_OPTIONS", "--enable-preview")
 }
